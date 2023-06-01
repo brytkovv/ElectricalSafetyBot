@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN chmod 755 .
-CMD ["python", "scr.bot"]
+CMD ["python", "-m", "src.bot"]
