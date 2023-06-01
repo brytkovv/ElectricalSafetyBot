@@ -34,7 +34,6 @@ def get_dispatcher(
         dp.include_router(router)
 
     # Register middlewares
-    # TODO: не работает со включенными тестирование
     dp.message.middleware(DatabaseMiddleware())
     dp.callback_query.middleware(DatabaseMiddleware())
 

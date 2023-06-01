@@ -7,7 +7,7 @@ from redis.asyncio.client import Redis
 from src.db import Database
 
 
-class RegisterCheck(BaseMiddleware):  # TODO: переделать в фильтр?
+class RegisterCheck(BaseMiddleware):
     """
     Middleware будет вызываться каждый раз, когда пользователь будет отправлять боту сообщения (или нажимать
     на кнопку в инлайн-клавиатуре).

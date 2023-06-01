@@ -11,7 +11,6 @@ from src.db import Database, create_session_maker
 class DatabaseMiddleware(BaseMiddleware):
     """This middleware throw a Database class to handler"""
 
-    # TODO Переделать на функции он процесс/пост
     async def __call__(
             self,
             handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
