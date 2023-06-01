@@ -1,0 +1,8 @@
+Вопрос: {{ question+1 }} из {{ number_of_questions }}
+Правильных ответов: {{ score }}
+
+❓ <b>{{ question_text }}</b>
+
+{% for answer in answers %}
+<b>{{ loop.index }}.</b> {{ answer }}
+{% endfor %}

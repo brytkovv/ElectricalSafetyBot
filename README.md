@@ -1,1 +1,1 @@
-# ElectricalSafetyBot
+# ElectricalSafety

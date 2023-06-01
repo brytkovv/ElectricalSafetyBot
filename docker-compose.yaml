@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  redis:
+    build:
+      context: .
+      dockerfile: RedisDockerfile
+    env_file:
+      - .env
+    restart: on-failure
+    ports:
+      - "6378:6379"
+  db:
+    container_name: db
+    image: postgres:14.5
+    env_file:
+      - .env
+    ports:
+      - '1234:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+    restart: on-failure
+  bot:
+    container_name: bot
+    build: .
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  db:
