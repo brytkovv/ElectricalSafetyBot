@@ -24,7 +24,7 @@ def get_dispatcher(
         storage: BaseStorage = MemoryStorage(),
         fsm_strategy: Optional[FSMStrategy] = FSMStrategy.CHAT,
         event_isolation: Optional[BaseEventIsolation] = None,
-        bot: Bot = None,
+        bot: Bot = None
 ):
     """This function set up dispatcher with routers, filters and middlewares"""
     dp = Dispatcher(

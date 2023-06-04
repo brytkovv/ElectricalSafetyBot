@@ -58,7 +58,7 @@ async def dp_filler(db):
 async def test_record(bot: MockedBot, dp: Dispatcher, db):
     await dp_filler(db)
 
-    record_command = get_update(get_message('/record'))
+    record_command = get_update(get_message('/record')) # TODO: вызываются разные объеты дб
     result = await dp.feed_update(bot, record_command)
     assert isinstance(result, SendMessage)
 

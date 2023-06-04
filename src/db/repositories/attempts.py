@@ -44,15 +44,9 @@ class AttemptRepo(Repository[Attempt]):
         :param user_id:
         :return:
         """
-        print()
-        print(user_id)
-        print()
-
         statement = select(self.type_model).where(self.type_model.user_id == user_id)
         await self.session.execute(statement)
         res = (await self.session.scalars(statement)).all()
-
-        print(res)
 
         return len(res), sum([0 if i.result < 0.8 else 1 for i in res])
 

@@ -9,7 +9,6 @@ from src.bot.dispatcher import get_dispatcher
 from src.bot.structures.data_structure import TransferData
 from src.cache import Cache
 from src.db.database import create_session_maker
-from src.db.models import Base
 from tests.utils.mocked_bot import MockedBot
 from tests.utils.mocked_database import MockedDatabase
 from tests.utils.mocked_redis import MockedRedis
@@ -24,6 +23,8 @@ async def pool():
 
 @pytest_asyncio.fixture(scope='session')
 async def db(pool: Callable[[], AsyncSession]):
+
+
     session = pool()
     database = MockedDatabase(session)
 
@@ -42,18 +43,9 @@ def storage():
     return MemoryStorage()
 
 
-@pytest.fixture(scope='session') # TODO: парент роутер в серии тестов # scope='session'
+@pytest.fixture(scope='session')
 def dp(storage):
     return get_dispatcher(storage=storage)
-
-# @pytest_asyncio.fixture()
-# async def dp(storage):
-#     dp = get_dispatcher(storage=storage)
-#     await dp.emit_startup()
-#     try:
-#         yield dp
-#     finally:
-#         await dp.emit_shutdown()
 
 
 @pytest.fixture(scope='session')
