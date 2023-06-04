@@ -41,7 +41,7 @@ def generate_the_test(file, n):
     :param n: int колиество вопросов
     :return: list список кварг с вопросами и ответами, n- количество вопросов
     """
-    file = Path(*file.split('/'))  # TODO: в тестах не работает этот относительный адрес ? Или работает
+    file = Path(*file.split('/'))
 
     with open(file, encoding='utf8') as file:
         data = json.load(file)
