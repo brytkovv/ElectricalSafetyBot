@@ -1,5 +1,6 @@
-🤖 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=27&pause=1000&color=000000&center=true&vCenter=true&width=320&height=30&lines=ElectricalSafetyBot" alt="Typing SVG" /></a> ⚡️ - бот для прохождения тестов по электробезопасности.
+🤖 <b>ElectricalSafetyBot</b> ⚡️ - бот для прохождения тестов по электробезопасности.
 -------------
+[![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/Electrosafety_bot) <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=&size=28&pause=1000&color=2662D4&center=true&vCenter=true&width=105&height=30&lines=%3C-+%D0%91%D0%9E%D0%A2" alt="Typing SVG" /></a>
 
 Данный бот построен на <b>aiogram3</b>, <b>postgreSQL</b>, <b>redis</b>, шаблонах <b>jinja</b>, сформирован <b>docker-compose.yaml</b>
 Построен на шаблоне <b>https://github.com/MassonNN/masson-aiogram-template</b> 
@@ -30,6 +31,8 @@ LOGGING_LEVEL=1
 
                 
 ----
+
+<b>Функции бота</b>
 
 🧩 В настройках вы можете выбрать количество вопросов и тему.
 🎲 По умолчанию выбрана <b>IV группа</b>, <b>10 вопросов</b>.
