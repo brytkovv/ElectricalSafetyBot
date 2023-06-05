@@ -1,4 +1,4 @@
-🤖 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=28&pause=1000&center=true&vCenter=true&width=350&height=27&lines=ElectricalSafetyBot" alt="Typing SVG" /></a> ⚡️ - бот для прохождения тестов по электробезопасности.
+🤖 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=27&pause=1000&color=000000&center=true&vCenter=true&width=320&height=30&lines=ElectricalSafetyBot" alt="Typing SVG" /></a> ⚡️ - бот для прохождения тестов по электробезопасности.
 -------------
 
 Данный бот построен на <b>aiogram3</b>, <b>postgreSQL</b>, <b>redis</b>, шаблонах <b>jinja</b>, сформирован <b>docker-compose.yaml</b>
