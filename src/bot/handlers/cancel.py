@@ -11,8 +11,8 @@ cancel_router = Router(name="cancel")
 
 
 @cancel_router.message(
-        any(SettingsStates.set_number_of_questions, SettingsStates.set_theme, SettingsStates.set_correct_answer_alert),
-        any(F.text == settings_text.BUTTON_CANCEL, Command(commands=["cancel"]), Text(text="отмена", ignore_case=True))
+        any([SettingsStates.set_number_of_questions, SettingsStates.set_theme, SettingsStates.set_correct_answer_alert]),
+        any([F.text == settings_text.BUTTON_CANCEL, Command(commands=["cancel"]), Text(text="отмена", ignore_case=True)])
 )
 async def cancel(message: types.Message, state: FSMContext):
     await message.answer(
