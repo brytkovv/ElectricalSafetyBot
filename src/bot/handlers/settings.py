@@ -165,7 +165,7 @@ async def alerts_chosen(message: types.Message, state: FSMContext, db):
     await state.clear()
     
     
-@settings_router.message(SettingsStates.set_number_of_questions)
+@settings_router.message(SettingsStates.set_correct_answer_alert)
 async def alerts_chosen_incorrectly(message: types.Message):
     """
     Incorrect alerts selection
