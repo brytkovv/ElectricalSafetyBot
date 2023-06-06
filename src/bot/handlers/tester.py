@@ -29,7 +29,7 @@ async def next_quest(
         
     async def correct_answer_alert():
         await callback.answer(
-            text=f"✔️ Правильный ответ!", # TODO: вынести текст в шаблоны
+            text=f"✔️ Правильный ответ!",
             show_alert=True)
 
     test: TestStatus = await db.test.get(callback.message.chat.id)
