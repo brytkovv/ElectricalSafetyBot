@@ -15,7 +15,7 @@ async def send_question(test, message=None, callback=None):
 
     cancel: InlineKeyboardButton = InlineKeyboardButton(
         text='❌ Отменить тест',
-        callback_data='stop')
+        callback_data=QuestionCallbackFactory(test_id=test.test_id, action='stop', value=0).pack()) # 'stop'
 
     keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
         inline_keyboard=[answers, [cancel]])

@@ -2,7 +2,7 @@
 import uuid
 from datetime import datetime
 
-from aiogram import Router, types
+from aiogram import F, Router, types
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery
 
@@ -14,7 +14,7 @@ from src.db.models import TestStatus
 tester_router = Router(name="test")
 
 
-@tester_router.callback_query(QuestionCallbackFactory.filter())
+@tester_router.callback_query(QuestionCallbackFactory.filter(F.action == "next"))
 async def next_quest(
         callback: CallbackQuery,
         callback_data: QuestionCallbackFactory,
