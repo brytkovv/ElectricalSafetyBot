@@ -10,15 +10,17 @@ from src.bot.structures import SettingsStates
 cancel_router = Router(name="cancel")
 
 
-@cancel_router.message(Command(commands=["cancel"]))
-@cancel_router.message(Text(text="отмена", ignore_case=True))
 @cancel_router.message(
-    SettingsStates.set_number_of_questions,
-    F.text == settings_text.BUTTON_CANCEL
-)
-@cancel_router.message(
-    SettingsStates.set_theme,
-    F.text == settings_text.BUTTON_CANCEL
+    (
+        SettingsStates.set_number_of_questions
+        or SettingsStates.set_theme
+        or SettingsStates.set_correct_answer_alert
+        ),
+    (
+        F.text == settings_text.BUTTON_CANCEL
+        or Command(commands=["cancel"])
+        or Text(text="отмена", ignore_case=True)
+        )
 )
 async def cancel(message: types.Message, state: FSMContext):
     await message.answer(
