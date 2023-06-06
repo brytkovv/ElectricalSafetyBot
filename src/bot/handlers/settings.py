@@ -25,7 +25,7 @@ async def set_changer(message: types.Message, db, state: FSMContext):
         status=False,
         theme=settings_text.AVAILABLE_THEME_NAMES[data['chosen_theme']],
         number_of_questions=data['chosen_amount'],
-        show_correct_anwser_alert=data['show_correct_answer_alert']
+        show_correct_anwser_alert=data['show_correct_answer_alert'],
         question=0,
         score=0
     )
