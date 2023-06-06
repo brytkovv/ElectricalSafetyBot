@@ -27,7 +27,7 @@ async def next_quest(
             text=f"❌ Ошибка. Верный ответ: {text if len(text) < 185 else text[:172] + '...'}",
             show_alert=True)
         
-    async def correct_answer():
+    async def correct_answer_alert():
         await callback.answer(
             text=f"✔️ Правильный ответ!",
             show_alert=True)
@@ -43,7 +43,8 @@ async def next_quest(
         if callback_data.value == 0:
             await send_correct_answer()
         else:
-            await correct_answer()
+            if test.show_correct_anwser_alert:
+                await correct_answer_alert()
             test.score += 1
         result = f'👏 Тест окончен.\nПравильных ответов {test.score} из {test.number_of_questions}'
 
@@ -70,7 +71,8 @@ async def next_quest(
             await send_correct_answer()
             await db.test.update(user_id=callback.message.chat.id, question=test.question + 1, score=test.score)
         else:
-            await correct_answer()
+            if test.show_correct_anwser_alert:
+                await correct_answer_alert()
             await db.test.update(user_id=callback.message.chat.id, question=test.question + 1, score=test.score + 1)
         await db.session.commit()
 

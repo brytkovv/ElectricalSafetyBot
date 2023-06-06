@@ -16,6 +16,7 @@ class TestStatus(Base):
     status = Column(Boolean, default=False)
     theme = Column(String, default='src/bot/utils/data_4.json')
     number_of_questions = Column(Integer, default=10)
+    show_correct_anwser_alert = Column(Boolean, default=True)
     test = Column(JSON, default={})
     question = Column(Integer, default=0)
     score = Column(Integer, default=0)
