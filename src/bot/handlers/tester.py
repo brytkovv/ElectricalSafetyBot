@@ -24,7 +24,12 @@ async def next_quest(
         text = [k for k, v in list(
             list(test.test.items())[test.question][1].items()) if v == 1][0]
         await callback.answer(
-            text=f"Верный ответ: {text if len(text) < 185 else text[:182] + '...'}",
+            text=f"❌ Ошибка. Верный ответ: {text if len(text) < 185 else text[:172] + '...'}",
+            show_alert=True)
+        
+    async def correct_answer():
+        await callback.answer(
+            text=f"✔️ Правильный ответ!",
             show_alert=True)
 
     test: TestStatus = await db.test.get(callback.message.chat.id)
@@ -38,6 +43,7 @@ async def next_quest(
         if callback_data.value == 0:
             await send_correct_answer()
         else:
+            await correct_answer()
             test.score += 1
         result = f'👏 Тест окончен.\nПравильных ответов {test.score} из {test.number_of_questions}'
 
