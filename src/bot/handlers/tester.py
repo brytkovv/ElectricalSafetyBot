@@ -70,6 +70,7 @@ async def next_quest(
             await send_correct_answer()
             await db.test.update(user_id=callback.message.chat.id, question=test.question + 1, score=test.score)
         else:
+            await correct_answer()
             await db.test.update(user_id=callback.message.chat.id, question=test.question + 1, score=test.score + 1)
         await db.session.commit()
 
