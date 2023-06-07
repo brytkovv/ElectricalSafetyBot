@@ -12,6 +12,8 @@ from src.db.database import create_session_maker
 from tests.utils.mocked_bot import MockedBot
 from tests.utils.mocked_database import MockedDatabase
 from tests.utils.mocked_redis import MockedRedis
+from tests.utils.fake_data_for_db import dp_filler
+
 
 
 @pytest_asyncio.fixture(scope='session')
@@ -26,7 +28,9 @@ async def db(pool: Callable[[], AsyncSession]):
     session = pool()
     database = MockedDatabase(session)
 
+    await dp_filler(database)
     yield database
+    
     await database.teardown()
     await session.close()
 

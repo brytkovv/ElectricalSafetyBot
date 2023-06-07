@@ -36,3 +36,14 @@ attempts_data = [
         "result": 0.8
     }
 ]
+
+
+async def dp_filler(db):
+    """
+    Fill the database fake data
+    """
+    for i in users_data:
+        await db.user.new(user_id=i["user_id"], user_name=i["user_name"])
+
+    for i in attempts_data:
+        await db.attempt.new(attempt_id=i["attempt_id"], user_id=i["user_id"], result=i["result"])
