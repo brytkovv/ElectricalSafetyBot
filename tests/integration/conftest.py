@@ -30,7 +30,7 @@ async def db(pool: Callable[[], AsyncSession]):
     await dp_filler(database)
     yield database
 
-    await database.teardown()
+    # await database.teardown() # TODO: зачем нам тирдаун????
     await session.close()
 
 
