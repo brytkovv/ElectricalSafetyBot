@@ -1,7 +1,7 @@
 """ This file represents a settings logic """
 
 from aiogram import Router, types, F
-from aiogram.filters import Command
+from aiogram.filters import Command, or_f, and_f
 from aiogram.fsm.context import FSMContext
 
 from src.bot.keyboards import make_many_rows_keyboard
@@ -80,36 +80,22 @@ async def theme_chosen_incorrectly(message: types.Message):
 
 @settings_router.message(
     SettingsStates.set_number_of_questions,
-    F.text.isdigit(),
-    lambda message: int(message.text) >= 5
+    or_f(
+        and_f(F.text.isdigit(),   
+            lambda message: int(message.text) >= 5),
+        F.text == settings_text.AVAILABLE_QUESTION_AMOUNT[1]
+        )
 )
-async def questions_amount_chosen_num(message: types.Message, state: FSMContext):
+async def questions_amount_chosen(message: types.Message, state: FSMContext):
     """
     Successful number of questions selection
     Display show correct answer alert selection menu
     """
-    await state.update_data(chosen_amount=int(message.text))
+    await state.update_data(
+        chosen_amount=1000 if message.text==settings_text.AVAILABLE_QUESTION_AMOUNT[1] else int(message.text)
+        )
     
     await message.answer(
-        text=settings_text.CHOISE_CORRECT_ANSWER_ALERT,
-        reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT)
-    )
-    
-    await state.set_state(SettingsStates.set_correct_answer_alert)
-
-
-@settings_router.message(
-    SettingsStates.set_number_of_questions,
-    F.text == settings_text.AVAILABLE_QUESTION_AMOUNT[1]
-)
-async def questions_amount_chosen_all(message: types.Message, state: FSMContext): # TODO: дублирование кода DRY (объединить)
-    """
-    Successful number of questions selection
-    Display show correct answer alert selection menu
-    """
-    await state.update_data(chosen_amount=1000)
-    
-    await message.answer( 
         text=settings_text.CHOISE_CORRECT_ANSWER_ALERT,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT)
     )
@@ -175,3 +161,4 @@ async def alerts_chosen_incorrectly(message: types.Message):
         text=settings_text.INCORRECT_NUM,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT)
     )  
+    

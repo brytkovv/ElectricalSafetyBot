@@ -10,6 +10,7 @@ from src.bot.callback_factories import QuestionCallbackFactory
 from src.bot.keyboards import send_question
 from src.bot.utils import generate_the_test
 from src.db.models import TestStatus
+from src.bot.lexicon import text_for_tests
 
 tester_router = Router(name="test")
 
@@ -24,19 +25,19 @@ async def next_quest(
         text = [k for k, v in list(
             list(test.test.items())[test.question][1].items()) if v == 1][0]
         await callback.answer(
-            text=f"❌ Ошибка. Верный ответ: {text if len(text) < 185 else text[:172] + '...'}",
+            text=text_for_tests.wrong_answer(text),
             show_alert=True)
         
     async def correct_answer_alert():
         await callback.answer(
-            text=f"✔️ Правильный ответ!",
+            text=text_for_tests.correct_answer,
             show_alert=True)
 
     test: TestStatus = await db.test.get(callback.message.chat.id)
 
     if not test.status or test.test_id != callback_data.test_id:
         return await callback.message.edit_text(
-            text='Теста не существует'
+            text=text_for_tests.test_not_found
         )
 
     elif test.question + 1 == test.number_of_questions:
@@ -46,7 +47,7 @@ async def next_quest(
             if test.show_correct_anwser_alert:
                 await correct_answer_alert()
             test.score += 1
-        result = f'👏 Тест окончен.\nПравильных ответов {test.score} из {test.number_of_questions}'
+        result = text_for_tests.the_test_is_over(test)
 
         await db.attempt.new(attempt_id=test.test_id, user_id=callback.message.chat.id,
                              test_name=test.theme,
@@ -102,7 +103,4 @@ async def process_test_command(message: types.Message, db):
         await send_question(test=test, message=message)
 
     else:
-        await message.answer(
-            text='Вы уже проходите тест.'
-                 'Для отмены теста напишите /stop'
-        )
+        await message.answer(text=text_for_tests.alreary_testing)

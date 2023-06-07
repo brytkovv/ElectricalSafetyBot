@@ -4,7 +4,7 @@ from pathlib import Path
 from random import sample
 
 
-def round_and_checking(lst, n):
+def _round_and_checking(lst, n):
     """
     Подбираем целое число вопросов для каждой темы
     используется рекурсивная функция
@@ -23,12 +23,12 @@ def round_and_checking(lst, n):
     elif sum(upd_lst) > n:
         lst[lst_diff.index(max(lst_diff))] = round(
             lst[lst_diff.index(max(lst_diff))]) - 1
-        return round_and_checking(lst, n)
+        return _round_and_checking(lst, n)
 
     elif sum(upd_lst) < n:
         lst[lst_diff.index(max(lst_diff))] = round(
             lst[lst_diff.index(max(lst_diff))]) + 1
-        return round_and_checking(lst, n)
+        return _round_and_checking(lst, n)
 
 
 def generate_the_test(file, n):
@@ -57,7 +57,7 @@ def generate_the_test(file, n):
     # Доля каждой темы
     adjust_proportion = [1 if i <= 1 else i for i in element_lenght]
 
-    tasks_amount = round_and_checking(adjust_proportion, n)
+    tasks_amount = _round_and_checking(adjust_proportion, n)
 
     out = [sample(list(el.items()), k=tasks_amount[i])
            for i, el in enumerate(data)]

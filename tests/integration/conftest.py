@@ -23,8 +23,6 @@ async def pool():
 
 @pytest_asyncio.fixture(scope='session')
 async def db(pool: Callable[[], AsyncSession]):
-
-
     session = pool()
     database = MockedDatabase(session)
 
