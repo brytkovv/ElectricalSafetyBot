@@ -10,6 +10,7 @@ from src.db.models import Base
 
 class TestStatus(Base):
     __tablename__ = 'TestStatus'
+    __test__ = False
 
     user_id = Column(BigInteger, ForeignKey('User.user_id'), primary_key=True)
     test_id = Column(UUID, default=uuid.uuid4())

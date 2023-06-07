@@ -13,7 +13,7 @@ async def test_record(bot: MockedBot, dp: Dispatcher, db):
     result = await dp.feed_update(bot, record_command)
     assert isinstance(result, SendMessage)
 
-    attempts, successful = await db.attempt.get_stat(user_id=TEST_USER.id) # TODO: вызываются разные объекты дб, разобраться
+    attempts, successful = await db.attempt.get_stat(user_id=TEST_USER.id)
 
     assert result.text == render_template('record.html', attempts=attempts, successful=successful)
     assert attempts == 3

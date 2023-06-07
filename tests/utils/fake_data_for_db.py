@@ -37,6 +37,19 @@ attempts_data = [
     }
 ]
 
+statuses_data = [
+    {
+        "user_id": 123,
+        "theme": "src/bot/utils/data_4.json",
+        "qustions": 10
+    },
+    {
+        "user_id": 12,
+        "theme": "src/bot/utils/data_3.json",
+        "qustions": 20
+    }
+]
+
 
 async def dp_filler(db):
     """
@@ -44,6 +57,9 @@ async def dp_filler(db):
     """
     for i in users_data:
         await db.user.new(user_id=i["user_id"], user_name=i["user_name"])
+
+    for i in statuses_data:
+        await db.test.new(user_id=i["user.id"], theme=i["theme"], number_of_questions=i["qustions"])
 
     for i in attempts_data:
         await db.attempt.new(attempt_id=i["attempt_id"], user_id=i["user_id"], result=i["result"])

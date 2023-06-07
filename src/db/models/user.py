@@ -7,7 +7,6 @@ from sqlalchemy.orm import relationship
 from src.db.models import Base
 
 
-# TODO: добавить точку изменения последнего посещения
 class User(Base):
     __tablename__ = 'User'
     user_id = Column(BigInteger, unique=True, nullable=False, primary_key=True)

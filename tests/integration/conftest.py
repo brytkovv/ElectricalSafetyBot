@@ -5,15 +5,14 @@ import pytest_asyncio
 from aiogram.fsm.storage.memory import MemoryStorage
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.bot.dispatcher import get_dispatcher
 from src.bot.structures.data_structure import TransferData
 from src.cache import Cache
 from src.db.database import create_session_maker
+from tests.utils.dispatcher_for_tests import get_dispatcher_for_tests
+from tests.utils.fake_data_for_db import dp_filler
 from tests.utils.mocked_bot import MockedBot
 from tests.utils.mocked_database import MockedDatabase
 from tests.utils.mocked_redis import MockedRedis
-from tests.utils.fake_data_for_db import dp_filler
-
 
 
 @pytest_asyncio.fixture(scope='session')
@@ -30,7 +29,7 @@ async def db(pool: Callable[[], AsyncSession]):
 
     await dp_filler(database)
     yield database
-    
+
     await database.teardown()
     await session.close()
 
@@ -46,8 +45,8 @@ def storage():
 
 
 @pytest.fixture(scope='session')
-def dp(storage):
-    return get_dispatcher(storage=storage)
+def dp(storage, db):
+    return get_dispatcher_for_tests(storage=storage, db=db)
 
 
 @pytest.fixture(scope='session')
