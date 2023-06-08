@@ -4,6 +4,7 @@ from aiogram import Dispatcher
 from aiogram.methods import SendMessage
 from aiogram.fsm.context import FSMContext
 
+from src.bot.keyboards import make_many_rows_keyboard
 from src.bot.lexicon import settings_text
 from src.bot.structures.fsm_groups import SettingsStates
 from tests.utils.mocked_bot import MockedBot
@@ -20,16 +21,22 @@ async def test_settings(bot: MockedBot, dp: Dispatcher, state: FSMContext):
     INCORRECT_OPTS_SHOW_CORRECT_ANSWER_ALERT = ['Не оповещать', 100, 'V группа допуска', '']
            
     async def command_is_hadled(text, expected, expected_state, kb=None):
-        command = get_update(get_message(text))
-        result = await dp.feed_update(bot, command)
+        commanda = get_update(get_message(text))
+        result = await dp.feed_update(bot, commanda)
         
-        assert isinstance(result, SendMessage)
+        assert isinstance(result, SendMessage), f'{text}'
         assert result.text == expected
-        assert result.reply_markup == kb
+        assert result.reply_markup == make_many_rows_keyboard(kb)
         assert state.get_state() == expected_state
         
     #  инициация
     await state.clear()
+
+    set_com = get_update(get_message('/settings'))
+    result = await dp.feed_update(bot, set_com)
+
+    assert isinstance(result, SendMessage), f'{result}111'
+
     await command_is_hadled('/settings', settings_text.SETTINGS_MAIN, SettingsStates.set_theme, settings_text.AVAILABLE_THEME_NAMES)
 
     # первый шаг

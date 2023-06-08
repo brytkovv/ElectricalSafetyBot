@@ -13,7 +13,7 @@ from tests.utils.updates import get_update, get_message
 @pytest.mark.asyncio
 async def test_cancel(bot: MockedBot, dp: Dispatcher, state: FSMContext):
     cancel_vars = [
-        '/stop', 
+        '/cancel',
         settings_text.BUTTON_CANCEL,
         'Отмена',
         'отмена',
@@ -23,14 +23,13 @@ async def test_cancel(bot: MockedBot, dp: Dispatcher, state: FSMContext):
     async def command_is_unhadled(text):    # TODO: вынести в утилс
         command = get_update(get_message(text))
         result = await dp.feed_update(bot, command)
-        assert isinstance(result, UNHANDLED)
-        
-        
+        assert isinstance(result, type(UNHANDLED))
+
     async def command_is_hadled(text, expected):
         command = get_update(get_message(text))
         result = await dp.feed_update(bot, command)
         
-        assert isinstance(result, SendMessage)
+        assert isinstance(result, SendMessage), text
         assert result.text == expected
         assert await state.get_data() == {}
 
