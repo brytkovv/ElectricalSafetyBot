@@ -37,7 +37,18 @@ async def create_session_maker(engine: AsyncEngine = None) -> sessionmaker:
     )
 
 
-class Database:
+class Singleton(type): # TODO: проверить, работает или нет (для тестов)
+    def __init__(cls, name, bases, attrs, **kwargs):
+        super().__init__(name, bases, attrs)
+        cls.__instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = super().__call__(*args, **kwargs)
+        return cls.__instance
+
+
+class Database(metaclass=Singleton):
     """
     Database class is the highest abstraction level of database and
     can be used in the handlers or any others bot-side functions
