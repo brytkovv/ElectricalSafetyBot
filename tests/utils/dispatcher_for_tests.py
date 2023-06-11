@@ -12,12 +12,11 @@ def get_dispatcher_for_tests(
         storage: BaseStorage = MemoryStorage(),
         fsm_strategy: Optional[FSMStrategy] = FSMStrategy.CHAT,
         event_isolation: Optional[BaseEventIsolation] = None,
-        db=None,
         bot: Bot = None
 ):
     """This function set up dispatcher with routers, filters and middlewares"""
     dp = Dispatcher(
-        storage=storage, fsm_strategy=fsm_strategy, events_isolation=event_isolation, db=db
+        storage=storage, fsm_strategy=fsm_strategy, events_isolation=event_isolation
     )
     for router in routers:
         dp.include_router(router)

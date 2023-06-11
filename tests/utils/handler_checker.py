@@ -18,8 +18,8 @@ async def command_is_handled(
         expected_state=None,
         kb=None
 ):
-    commanda = get_update(get_message(text))  # TODO: разбрить на две функции?
-    result = await dp.feed_update(bot, commanda, db=db)
+    command = get_update(get_message(text))  # TODO: разбрить на две функции?
+    result = await dp.feed_update(bot, command, db=db)
 
     assert isinstance(result, SendMessage), f'{text} {result}'
     assert result.text == expected

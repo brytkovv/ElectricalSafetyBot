@@ -14,12 +14,6 @@ from tests.utils.updates import get_update, get_message, TEST_USER
 
 @pytest.mark.asyncio
 async def test_settings(bot: MockedBot, dp: Dispatcher, state: FSMContext, db):
-    INCORRECT_THEME_NAMES = [5, '5', 'Четвертая', 'Оповещать']
-
-    INCORRECT_QUESTION_AMOUNT = [1, 2, 3, 4, 2.4, 212.2, 'V группа допуска', 'Оповещать', '3']
-
-    INCORRECT_OPTS_SHOW_CORRECT_ANSWER_ALERT = ['Неоповещать', 100, 'V группа допуска', '']
-
     #  инициация
     await state.clear()
     await command_is_handled(bot, dp, state, db, '/settings', settings_text.SETTINGS_MAIN, SettingsStates.set_theme,
@@ -28,7 +22,7 @@ async def test_settings(bot: MockedBot, dp: Dispatcher, state: FSMContext, db):
     # первый шаг
     # проверяем неправильные значения
     [await command_is_handled(bot, dp, state, db, i, settings_text.INCORRECT_THEME_NAME, SettingsStates.set_theme,
-                              settings_text.AVAILABLE_THEME_NAMES) for i in INCORRECT_THEME_NAMES]
+                              settings_text.AVAILABLE_THEME_NAMES) for i in settings_text.INCORRECT_THEME_NAMES]
 
     # проверяем правильные  
     for i in settings_text.AVAILABLE_THEME_NAMES:
@@ -52,9 +46,9 @@ async def test_settings(bot: MockedBot, dp: Dispatcher, state: FSMContext, db):
     # второй шаг
     [await command_is_handled(bot, dp, state, db, i, settings_text.INCORRECT_NUM,
                               SettingsStates.set_number_of_questions,
-                              settings_text.AVAILABLE_QUESTION_AMOUNT) for i in INCORRECT_QUESTION_AMOUNT]
+                              settings_text.AVAILABLE_QUESTION_AMOUNT) for i in settings_text.INCORRECT_QUESTION_AMOUNT]
 
-    for i in ['5', '10', '20', '50', '100', 'Все', 7, 99, 400]:
+    for i in settings_text.CORRECT_QUESTION_AMOUNT:
         await command_is_handled(bot, dp, state, db, i, settings_text.CHOISE_CORRECT_ANSWER_ALERT,
                                  SettingsStates.set_correct_answer_alert,
                                  settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT)
@@ -83,7 +77,7 @@ async def test_settings(bot: MockedBot, dp: Dispatcher, state: FSMContext, db):
     [await command_is_handled(bot, dp, state, db, i, settings_text.INCORRECT_NUM,
                               SettingsStates.set_correct_answer_alert,
                               settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT) for i in
-     INCORRECT_OPTS_SHOW_CORRECT_ANSWER_ALERT]
+     settings_text.INCORRECT_OPTS_SHOW_CORRECT_ANSWER_ALERT]
 
     for i in settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT:
         await state.clear()
@@ -108,8 +102,6 @@ async def test_settings(bot: MockedBot, dp: Dispatcher, state: FSMContext, db):
 
         await command_is_handled(bot, dp, state, db, i, settings_text.SELECTED_PARAMS, None, None)
         await state.set_state(SettingsStates.set_correct_answer_alert)
-
-        data = await state.get_data()
 
         test: TestStatus = await db.test.get(TEST_USER.id)
 

@@ -17,7 +17,6 @@ async def set_changer(message: types.Message, db, state: FSMContext):
     Make changes of settings in db
     """
     data = await state.get_data()
-    print(data)
 
     test: TestStatus = await db.test.get(message.from_user.id)
 
