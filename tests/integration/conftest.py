@@ -31,7 +31,7 @@ async def db(pool: Callable[[], AsyncSession]):
     database = MockedDatabase(session)
 
     await dp_filler(database)
-    yield database
+    yield database # он возвращает действующую дб
 
     # await database.teardown()
     await session.close()
@@ -48,8 +48,8 @@ def storage():
 
 
 @pytest.fixture(scope='session')
-def dp(storage, db):
-    return get_dispatcher_for_tests(storage=storage, db=db)
+def dp(storage):
+    return get_dispatcher_for_tests(storage=storage)
 
 
 @pytest.fixture(scope='session')
@@ -65,10 +65,12 @@ def transfer_data(pool, db, bot, cache):
         cache=cache
     )
 
+
 @pytest.fixture(scope='session')
 def state(bot, storage):
     state = FSMContext(
-        bot=bot, storage=storage,
+        bot=bot,
+        storage=storage,
         key=StorageKey(user_id=TEST_USER.id, bot_id=bot.id, chat_id=TEST_CHAT.id)
     )
 

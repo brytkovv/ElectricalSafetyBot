@@ -17,6 +17,7 @@ async def set_changer(message: types.Message, db, state: FSMContext):
     Make changes of settings in db
     """
     data = await state.get_data()
+    print(data)
 
     test: TestStatus = await db.test.get(message.from_user.id)
 
@@ -40,11 +41,13 @@ async def get_settings(message: types.Message, state: FSMContext):
     Settings command handler
     Display theme selection menu
     """
-    await message.answer(
+    await state.set_state(SettingsStates.set_theme)
+
+    return await message.answer(
         text=settings_text.SETTINGS_MAIN,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_THEME_NAMES)
     )
-    await state.set_state(SettingsStates.set_theme)
+
 
 
 @settings_router.message(
@@ -58,11 +61,13 @@ async def theme_chosen(message: types.Message, state: FSMContext):
     """
     await state.update_data(chosen_theme=message.text)
 
-    await message.answer(
+    await state.set_state(SettingsStates.set_number_of_questions)
+
+    return await message.answer(
         text=settings_text.CHOICE_NUM_OF_QUESTIONS,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_QUESTION_AMOUNT)
     )
-    await state.set_state(SettingsStates.set_number_of_questions)
+
 
 
 @settings_router.message(SettingsStates.set_theme)
@@ -71,7 +76,7 @@ async def theme_chosen_incorrectly(message: types.Message):
     Incorrect theme selected
     Display theme selection menu again
     """
-    await message.answer(
+    return await message.answer(
         text=settings_text.INCORRECT_THEME_NAME,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_THEME_NAMES)
     )
@@ -94,13 +99,15 @@ async def questions_amount_chosen(message: types.Message, state: FSMContext):
     await state.update_data(
         chosen_amount=1000 if message.text==settings_text.AVAILABLE_QUESTION_AMOUNT[1] else int(message.text)
         )
+
+    await state.set_state(SettingsStates.set_correct_answer_alert)
     
-    await message.answer(
+    return await message.answer(
         text=settings_text.CHOISE_CORRECT_ANSWER_ALERT,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT)
     )
     
-    await state.set_state(SettingsStates.set_correct_answer_alert)
+
 
 
 @settings_router.message(
@@ -111,7 +118,7 @@ async def questions_amount_chosen_different(message: types.Message, state: FSMCo
     """
     Input number of questions 
     """
-    await message.answer(
+    return await message.answer(
         text=settings_text.ENTER_NUMBER_OF_QUESTIONS,
         reply_markup=types.ReplyKeyboardRemove()
     )
@@ -123,7 +130,7 @@ async def questions_amount_chosen_incorrectly(message: types.Message):
     Incorrect number of questions  selected
     Display theme number of questions  menu again
     """
-    await message.answer(
+    return await message.answer(
         text=settings_text.INCORRECT_NUM,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_QUESTION_AMOUNT)
     )
@@ -141,14 +148,16 @@ async def alerts_chosen(message: types.Message, state: FSMContext, db):
     """
     await state.update_data(show_correct_answer_alert=True if message.text == settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT[0] else False)
 
-    await message.answer(
+    await set_changer(message, db, state)
+
+    await state.clear()
+
+    return await message.answer(
         text=settings_text.SELECTED_PARAMS,
         reply_markup=types.ReplyKeyboardRemove()
     )
 
-    await set_changer(message, db, state)
 
-    await state.clear()
     
     
 @settings_router.message(SettingsStates.set_correct_answer_alert)
@@ -157,7 +166,7 @@ async def alerts_chosen_incorrectly(message: types.Message):
     Incorrect alerts selection
     Display show correct answer alert selection menu
     """
-    await message.answer(
+    return await message.answer(
         text=settings_text.INCORRECT_NUM,
         reply_markup=make_many_rows_keyboard(settings_text.AVAILABLE_OPTS_SHOW_CORRECT_ANSWER_ALERT)
     )  

@@ -18,18 +18,18 @@ cancel_router = Router(name="cancel")
                 SettingsStates.set_correct_answer_alert
             ),
             or_f(
-                F.text == settings_text.BUTTON_CANCEL, 
+                F.text == settings_text.BUTTON_CANCEL,
                 Command(commands=["cancel"]), 
                 Text(text="отмена", ignore_case=True)
             )
         )
 )
 async def cancel(message: types.Message, state: FSMContext):
-    await message.answer(
+    await state.clear()
+
+    return await message.answer(
         text=settings_text.DISCARD_CHANGES,
         reply_markup=types.ReplyKeyboardRemove()
     )
-
-    await state.clear()
 
 

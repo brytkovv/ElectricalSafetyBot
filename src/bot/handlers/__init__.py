@@ -12,12 +12,12 @@ from src.bot.handlers.top import top_router
 routers = (
     start_router,
     help_router,
+    cancel_router,
+    settings_router,
     top_router,
     record_router,
     stop_router,
     tester_router,
     alerts_router,
-    cancel_router,
-    settings_router,
     about_router
 )

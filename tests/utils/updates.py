@@ -18,7 +18,7 @@ TEST_USER = User(
 )
 
 TEST_CHAT = Chat(
-    id=12,
+    id=TEST_USER.id, # 12,
     type="private",
     title=None,
     username=TEST_USER.username,
