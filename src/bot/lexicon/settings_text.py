@@ -26,9 +26,9 @@ CHOICE_NUM_OF_QUESTIONS = "⚙️ Выберите количество вопр
 
 INCORRECT_THEME_NAME = "⚠ Некорректный вариант.\n\nПожалуйста, выберите одно из названий из списка ниже:"
 
-SELECTED_PARAMS = '✅ Выбрано! ✅'
+SELECTED_PARAMS = '✅ Выбрано!'
 
-SELECTED_ALL_QUESTS = '✅ Выбраны все вопросы! ✅'
+SELECTED_ALL_QUESTS = '✅ Выбраны все вопросы!'
 
 ENTER_NUMBER_OF_QUESTIONS = '⚙️ Введите число вопросов:'
 

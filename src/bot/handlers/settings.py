@@ -30,7 +30,7 @@ async def set_changer(message: types.Message, db, state: FSMContext):
         score=0
     )
 
-    await db.session.commit()
+    await db.session.commit()   # TODO: чо это здесь делает?
 
 # first step
 

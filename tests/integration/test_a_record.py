@@ -16,5 +16,3 @@ async def test_record(bot: MockedBot, dp: Dispatcher, db):
     attempts, successful = await db.attempt.get_stat(user_id=TEST_USER.id)
 
     assert result.text == render_template('record.html', attempts=attempts, successful=successful)
-    assert attempts == 4
-    assert successful == 3

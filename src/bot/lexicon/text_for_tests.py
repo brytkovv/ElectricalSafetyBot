@@ -1,6 +1,6 @@
 alreary_testing = 'Вы уже проходите тест.\nДля отмены теста напишите /stop'
 
-correct_answer = f"✔️ Правильный ответ!"
+correct_answer = f"✅️ Правильный ответ!"
 
 test_not_found = 'Теста не существует'
 

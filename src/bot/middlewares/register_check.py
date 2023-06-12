@@ -50,5 +50,5 @@ class RegisterCheck(BaseMiddleware):
                               )
             await db.test.new(user_id=user.id)
             await data['bot'].send_message(user.id, 'Ты успешно зарегистрирован(а)!')
-            await db.session.commit()
+            await db.session.commit() # TODO: это нарушает концепцию
         return await handler(event, data)

@@ -75,7 +75,7 @@ async def next_quest(
             if test.show_correct_anwser_alert:
                 await correct_answer_alert()
             await db.test.update(user_id=callback.message.chat.id, question=test.question + 1, score=test.score + 1)
-        await db.session.commit()
+        await db.session.commit() # TODO: надо убирать это
 
         await send_question(test=test, callback=callback)
 
