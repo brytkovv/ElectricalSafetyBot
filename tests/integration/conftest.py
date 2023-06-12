@@ -18,7 +18,7 @@ from tests.utils.mocked_redis import MockedRedis
 from tests.utils.updates import TEST_USER, TEST_CHAT
 
 
-@pytest_asyncio.fixture(scope='session')
+@pytest_asyncio.fixture(scope='session') # TODO: подключение к тестовой дб
 async def pool():
     pool_ = await create_session_maker()
     yield pool_
