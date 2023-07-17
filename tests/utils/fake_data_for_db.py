@@ -51,7 +51,7 @@ statuses_data = [
 ]
 
 
-async def dp_filler(db): # TODO: сделать это чрез миграции
+async def dp_filler(db): # TODO: сделать это чрез pg_restore
     """
     Fill the database fake data
     """

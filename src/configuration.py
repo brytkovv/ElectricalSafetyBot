@@ -77,6 +77,7 @@ class Configuration:
     db = DatabaseConfig()
     redis = RedisConfig()
     bot = BotConfig()
+    admin_ids = list(int(i) for i in getenv("TG_BOT_ADMIN").split(', '))
 
 
 conf = Configuration()

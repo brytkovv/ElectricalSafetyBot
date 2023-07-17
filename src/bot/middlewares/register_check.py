@@ -25,7 +25,7 @@ class RegisterCheck(BaseMiddleware):
         if not res:
             result = await db.user.get(user.id)
             await cache.set(key='is_id_exists:' + str(user.id),
-                            value=1 if result else 0)
+                            value=1 if result else 0, ex=3600)
             return bool(result)
         else:
             return bool(res)

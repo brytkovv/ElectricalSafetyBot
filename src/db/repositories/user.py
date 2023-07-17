@@ -1,6 +1,7 @@
 """ User repository file """
 from datetime import datetime
 
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.models import User
@@ -39,3 +40,9 @@ class UserRepo(Repository[User]):
             )
         )
         return new_user
+
+    async def get_num_of_users(self):
+        statement = select(func.count(self.type_model.user_id))
+        res = await self.session.execute(statement)
+
+        return res.one_or_none()

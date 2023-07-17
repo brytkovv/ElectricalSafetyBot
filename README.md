@@ -24,6 +24,8 @@ BOT_TOKEN = '123456789:ASD_VjnhasdVJJ' # здесь укажите свой то
 DEBUG=0
 
 LOGGING_LEVEL=1
+
+TG_BOT_ADMIN = "123, 456, 789"
 ```
 
 3.  Перейдите в папку содержащую <b>docker-compose.yaml</b> и введите в консоль `docker-compose up -d --build` (при условии что у вас установлен <b>docker</b> и <b>docker-compose</b>).

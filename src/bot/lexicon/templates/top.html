@@ -1,4 +1,10 @@
 🏆 <b>Топ по числу попыток:</b>
-{% for el in top %}
-🏅 <b>{{ loop.index }}.</b> {{ el }}
-{% endfor %}
+
+{% for el in top -%}
+{% if loop.index <= 5 -%}
+🏅 <b>{{ el.rank }}.</b> {{ el.name }}: {{ el.record }}
+{% else -%}
+  . . . . .
+🍬 <b>{{ el.rank }}.</b> {{ el.name }}: {{ el.record }}
+{% endif -%}
+{% endfor -%}

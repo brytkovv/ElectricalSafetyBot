@@ -35,7 +35,7 @@ class Cache:
         """
         return self.client
 
-    async def close(self):  # TODO: добавить масс ограмму
+    async def close(self):
         await self.client.close()
 
     @final

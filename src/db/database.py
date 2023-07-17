@@ -18,7 +18,6 @@ async def create_async_engine(url: URL | str) -> AsyncEngine:
         url=url, echo=conf.debug, pool_pre_ping=True
     )
 
-    # TODO: сделать алембик и убрать это
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
