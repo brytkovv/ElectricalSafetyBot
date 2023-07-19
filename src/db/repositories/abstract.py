@@ -1,10 +1,13 @@
 """ Repository file """
 import abc
+from pathlib import Path
 from typing import Generic, List, Type, TypeVar
 
-from sqlalchemy import delete, select, update
+from sqlalchemy import delete, select, update, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.bot.utils.dumpdata import dump_to_csv_writer
+from src.configuration import pwd
 from src.db.models import Base
 
 AbstractModel = TypeVar("AbstractModel")
@@ -86,3 +89,15 @@ class Repository(Generic[AbstractModel]):
         :return: Nothing
         """
         ...
+
+    async def data_to_csv(self):
+        query = f"SELECT * FROM \"{self.type_model.__tablename__}\";"
+        result = await self.session.execute(text(query))
+
+        file_path = Path(pwd, 'src', 'db', 'dumps', f'{self.type_model.__tablename__}.csv')
+
+        await dump_to_csv_writer(result, file_path)
+
+    async def delete_data(self):
+        query = f"DELETE FROM \"{self.type_model.__tablename__}\";"
+        await self.session.execute(text(query))

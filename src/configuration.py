@@ -1,5 +1,6 @@
 """ This file represents configurations from files and environment"""
 import logging
+import os
 from dataclasses import dataclass
 from os import getenv
 
@@ -8,6 +9,8 @@ from redis.asyncio.client import Redis
 from sqlalchemy.engine import URL
 
 dotenv.load_dotenv()
+
+pwd = os.getcwd()
 
 
 @dataclass
@@ -77,6 +80,7 @@ class Configuration:
     db = DatabaseConfig()
     redis = RedisConfig()
     bot = BotConfig()
+
     admin_ids = list(int(i) for i in getenv("TG_BOT_ADMIN").split(', '))
 
 
