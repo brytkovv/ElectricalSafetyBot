@@ -42,7 +42,6 @@ async def restore(file='db.dump'):
               f'--port "{conf.db.port}" ' \
               f'--username "{conf.db.user}" ' \
               f'--dbname "{conf.db.name}" ' \
-              f'--clean ' \
               f'--verbose "{file_path}"'
 
     await subprocess.create_subprocess_shell(command)
