@@ -31,7 +31,7 @@ async def dump():
               f'--data-only "{conf.db.name}"'
 
     await subprocess.create_subprocess_shell(command)
-    await subprocess.create_subprocess_shell(f'cp {file_path} {copied_file}')
+    await subprocess.create_subprocess_shell(f'cp {file_path} {Path(directory, copied_file)}')
 
 
 async def restore(file='db.dump'):
