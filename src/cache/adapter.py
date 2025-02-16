@@ -10,13 +10,8 @@ from src.configuration import conf
 
 def build_redis_client() -> Redis:
     """Build redis client"""
-    client = Redis(
-        host=conf.redis.host,
-        db=conf.redis.db,
-        port=conf.redis.port,
-        password=conf.redis.passwd,
-        username=conf.redis.username,
-    )
+    client = Redis.from_url(conf.redis.redis_url)
+
     asyncio.create_task(client.ping())
     return client
 

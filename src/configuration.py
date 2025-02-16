@@ -17,50 +17,27 @@ pwd = os.getcwd()
 class DatabaseConfig:
     """Database connection variables"""
 
-    name: str = getenv("POSTGRES_DB")
-    user: str = getenv("POSTGRES_USER", "docker")
-    passwd: str = getenv("POSTGRES_PASSWORD", None)
-    port: int = int(getenv("POSTGRES_PORT", 5432))
-    host: str = getenv("POSTGRES_HOST", "db")
-
-    driver: str = "asyncpg"
-    database_system: str = "postgresql"
+    db_url: str = getenv("DATABASE_URL")
 
     def build_connection_str(self) -> str:
         """
-        This function build a connection string
+        Возвращает строку подключения, корректируя схему, если это необходимо.
         """
-        return URL.create(
-            drivername=f"{self.database_system}+{self.driver}",
-            username=self.user,
-            database=self.name,
-            password=self.passwd,
-            port=self.port,
-            host=self.host,
-        ).render_as_string(hide_password=False)
+        if self.db_url.startswith("postgres://"):
+            return self.db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+        return self.db_url
 
 
 @dataclass
 class RedisConfig:
     """Redis connection variables"""
 
-    db: str = int(getenv("REDIS_DATABASE", 1))
-    host: str = getenv("REDIS_HOST", "redis")
-    port: int = int(getenv("REDIS_PORT", 6379))
-    passwd: str | int = getenv("REDIS_PASSWORD", None)
-    username: int = getenv("REDIS_USERNAME", None)
+    redis_url: str = getenv("REDIS_URL")
     state_ttl: int = getenv("REDIS_TTL_STATE", None)
     data_ttl: int = getenv("REDIS_TTL_DATA", None)
 
     def build_connection_str(self) -> str:
-        redis = Redis(
-            host=self.host,
-            db=self.db,
-            port=self.port,
-            password=self.passwd
-            # username=self.username
-        )
-        return redis
+        return self.redis_url
 
 
 @dataclass
